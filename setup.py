@@ -2,7 +2,16 @@ from setuptools import setup
 
 version = "0.0.1"
 
-requirements = ["numpy", "numba", "scikit-learn"]
+requirements = [
+    "numpy",
+    "numba",
+    "scikit-learn",
+    "jupyter",
+    "ipython",
+    "notebook",
+    "pandas",
+    "seaborn"
+    ]
 
 
 info = {
