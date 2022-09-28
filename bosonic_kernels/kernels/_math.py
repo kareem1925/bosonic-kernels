@@ -125,4 +125,4 @@ def displaced(x1: np.ndarray, x2: np.ndarray, dis_mag: float = 1.0):
 @njit(nogil=True)
 def squeezing(x1: np.ndarray, x2: np.ndarray, sq_mag: float):
     sigma = np.cosh(sq_mag) ** 2 - (np.exp(1j * (x2 - x1)) * np.sinh(sq_mag) ** 2)
-    return np.square(np.abs(1 / sigma)).mean()
+    return np.square(np.abs(1 / np.sqrt(sigma))).mean()

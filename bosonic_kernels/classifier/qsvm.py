@@ -18,7 +18,9 @@ _feature_maps = {
 class QSVM(SVC):
     def __init__(
         self,
-        quantum_kernel: str,
+        *,
+        C: float = 1.0,
+        quantum_kernel: str = "squeezing",
         sq_mag: float = 1.0,
         dis_mag: float = 1.0,
         sq_phi: float = 0.0,
@@ -31,6 +33,7 @@ class QSVM(SVC):
     ):
 
         self.quantum_kernel = quantum_kernel
+        self.C = C
         self.sq_mag = sq_mag
         self.sq_mag_2 = sq_mag if sq_mag_2 is None else sq_mag_2
         self.sq_phi = sq_phi
