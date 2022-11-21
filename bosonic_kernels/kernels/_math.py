@@ -49,7 +49,7 @@ def displaced_squeezed_angle(
 
     term_3 = 0.5 * ((z2 * z1_conj) - (z2_conj * z1))
 
-    return np.square(np.abs(np.exp(term_2 + term_3) * (1 / term_1))).mean()
+    return np.prod(np.square(np.abs(np.exp(term_2 + term_3) * (1 / term_1))))
 
 
 @njit(nogil=True, fastmath=True)
@@ -97,7 +97,7 @@ def displaced_squeezed_amp(
 
     term_3 = 0.5 * ((z2 * z1_conj) - (z2_conj * z1))
 
-    return np.square(np.abs(np.exp(term_2 + term_3) * (1 / term_1))).mean()
+    return np.prod(np.square(np.abs(np.exp(term_2 + term_3) * (1 / term_1))))
 
 
 @njit(nogil=True, fastmath=True)
@@ -106,23 +106,10 @@ def displaced(x1: np.ndarray, x2: np.ndarray, dis_mag: float = 1.0):
     z1 = dis_mag * np.exp(1j * x1)
     z2 = dis_mag * np.exp(1j * x2)
 
-    eta_21 = z2 - z1
-
-    eta_12 = z1 - z2
-
-    return np.square(
-        np.abs(
-            (
-                np.exp(
-                    (eta_21 * np.conj(eta_12) / 2)
-                    + 0.5 * (z2 * np.conj(z1) - np.conj(z2) * z1)
-                )
-            )
-        )
-    ).mean()
+    return np.prod(np.exp(-np.abs(z1 - z2)))
 
 
 @njit(nogil=True)
 def squeezing(x1: np.ndarray, x2: np.ndarray, sq_mag: float):
     sigma = np.cosh(sq_mag) ** 2 - (np.exp(1j * (x2 - x1)) * np.sinh(sq_mag) ** 2)
-    return np.square(np.abs(1 / np.sqrt(sigma))).mean()
+    return np.prod(np.square(np.abs(1 / np.sqrt(sigma))))

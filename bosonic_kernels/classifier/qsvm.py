@@ -76,9 +76,7 @@ class QSVM(SVC):
                 dis_phi_2=dis_phi_2,
             )._compute_kernel
 
-        super().__init__(
-            kernel=self.kernel,
-        )
+        super().__init__(kernel=self.kernel, C=self.C)
 
     @classmethod
     def _get_param_names(cls):

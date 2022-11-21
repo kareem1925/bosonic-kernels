@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import numpy as np
-from numba import njit
+from numba import njit, prange
 
 from ._math import (
     displaced,
@@ -17,12 +17,12 @@ _quantum_kernels = {
 }
 
 
-@njit(nogil=True, fastmath=True)
+@njit(nogil=True, fastmath=True, parallel=True)
 def _gram_matrix(x: np.ndarray, y: np.ndarray, fnum: callable, *args):
     gram = np.zeros((x.shape[0], y.shape[0]))
 
     #    np.fill_diagonal(gram, 1.0)
-    for index in range(len(x)):
+    for index in prange(len(x)):
         temp = x[index]
         for index2, value2 in enumerate(y):
             gram[index, index2] = fnum(temp, value2, *args)
